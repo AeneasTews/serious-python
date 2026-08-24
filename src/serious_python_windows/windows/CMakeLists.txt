@@ -68,12 +68,13 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
+file(TO_CMAKE_PATH "$ENV{WINDIR}" WINDIR_PATH)
 set(serious_python_windows_bundled_libraries
   "${PYTHON_PACKAGE}/python312$<$<CONFIG:Debug>:_d>.dll"
   "${PYTHON_PACKAGE}/python3$<$<CONFIG:Debug>:_d>.dll"
-  "$ENV{WINDIR}/system32/msvcp140.dll"
-  "$ENV{WINDIR}/system32/vcruntime140.dll"
-  "$ENV{WINDIR}/system32/vcruntime140_1.dll"
+  "${WINDIR_PATH}/system32/msvcp140.dll"
+  "${WINDIR_PATH}/system32/vcruntime140.dll"
+  "${WINDIR_PATH}/system32/vcruntime140_1.dll"
   PARENT_SCOPE
 )
 
