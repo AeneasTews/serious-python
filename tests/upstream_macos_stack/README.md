@@ -25,3 +25,21 @@ how much stack headroom the current release provides.
 The script leaves the generated project and `run.log` in the printed temporary
 directory so a crash can be inspected. Send back the `STACK_PROBE_` lines and
 your Mac's architecture (`uname -m`).
+
+To test the proposed fix in the **same built app**, run:
+
+```sh
+bash tests/upstream_macos_stack/run_fixed.sh /path/printed/by/run.sh
+```
+
+This fetches the exact [draft PR commit](https://github.com/flet-dev/dart-bridge/pull/21),
+builds its macOS bridge binary for your machine, replaces the binary inside that
+temporary release app, re-signs the app for local execution, and runs the same
+Python/NumPy probe. The published package, your Flutter installation, and the
+shared Flet cache are untouched. The original embedded bridge binary is saved
+as `dart_bridge.upstream` in the temporary project directory.
+
+A successful fixed run should print at least 8,388,608 stack bytes and
+`numpy=ok`. This is a local smoke test using an ad-hoc signature and a
+single-architecture binary; the upstream release still needs its full Apple
+XCFramework and normal signed artifacts.
