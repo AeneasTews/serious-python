@@ -14,8 +14,10 @@ flutter create --platforms=macos --project-name serious_python_stack_probe "$pro
 cp "$probe_source/main.dart" "$probe_dir/lib/main.dart"
 mkdir -p "$probe_dir/app/src"
 cp "$probe_source/main.py" "$probe_dir/app/src/main.py"
-sed -i '' "s/platform :osx, '10.15'/platform :osx, '11.0'/" \
-  "$probe_dir/macos/Podfile"
+if [[ -f "$probe_dir/macos/Podfile" ]]; then
+  sed -i '' "s/platform :osx, '10.15'/platform :osx, '11.0'/" \
+    "$probe_dir/macos/Podfile"
+fi
 sed -i '' 's/MACOSX_DEPLOYMENT_TARGET = 10.15;/MACOSX_DEPLOYMENT_TARGET = 11.0;/' \
   "$probe_dir/macos/Runner.xcodeproj/project.pbxproj"
 
