@@ -15,7 +15,8 @@ Look for `STACK_PROBE_RESULT: stack_bytes=… numpy=ok`. The stack measurement i
 taken inside the actual Python worker before NumPy is imported. A stack below
 8,388,608 bytes means the published runtime lacks the proposed 8 MiB default.
 If NumPy reports an error or the app crashes after printing
-`STACK_PROBE_STACK_BYTES`, the failure is reproduced. If NumPy succeeds with a
+`STACK_PROBE_STACK_BYTES`, the failure is reproduced. The worker waits until
+Flutter has printed the stack size before importing NumPy. If NumPy succeeds with a
 smaller stack, this workload does not reproduce the crash; the size still shows
 how much stack headroom the current release provides.
 
